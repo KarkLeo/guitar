@@ -1,0 +1,572 @@
+//-----Функции относитильного размера и позиционирования на основе данных с макета-----
+
+	 $mockup-width: 1920px;  //Ширина экрана по макету
+	$mockup-height: 980px;   //Высота экрана по макету
+
+//Функции принимают значения на прямую с макета
+@mixin rel-width($abs-width) {
+	width: $abs-width / $mockup-width * 100%;
+}
+@mixin rel-height($abs-height) {
+	height: $abs-height / $mockup-height * 100%;
+}
+
+@mixin rel-left($abs-left) {
+	left: $abs-left / $mockup-width * 100%;
+}
+@mixin rel-right($abs-right) {
+	right: $abs-right / $mockup-width * 100%;
+}
+@mixin rel-top($abs-top) {
+	top: $abs-top / $mockup-height * 100%;
+}
+@mixin rel-bottom($abs-bottom) {
+	bottom: $abs-bottom / $mockup-height * 100%;
+}
+//----------
+
+//Подключение сторонних шрифтов
+@font-face {
+	font-family: 'Lato-Regular';
+	src: url('../fonts/Lato-Regular.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'TrajanPro3-Bold';
+	src: url('../fonts/TrajanPro3-Bold.otf');
+	font-weight: bold;
+	font-style: normal;
+}
+//----------
+
+body {
+	padding: 0;
+	color: #fff;
+	font-family: 'Lato-Regular', sans-serif;
+	background-color: #1f1f1f;
+	background-image: url("../img/title-image.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	transition: all 500ms ease;
+}
+
+.header {
+	position: absolute;
+	left: 0;
+	right: 0;
+	width: 100%;
+	@include rel-height(110px);
+	margin: 0;
+	padding: 0;
+	.header__logo {
+		position: absolute;
+		top: 50%;
+		@include rel-left(55px);
+		width: 91px;
+		height: 55px;
+		img {
+			width: 91px;
+			height: 55px;
+		}
+	}
+	.header__menu {
+		position: absolute;
+		top: 55%;
+		@include rel-right(55px);
+		@include rel-width(340px);
+		min-width: 340px;
+		ul {
+			//Использован флекс для распределения элементов меню на одном расстоянии
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding: 0;
+			list-style: none;			
+			li a {
+				display: block;
+				width: 100%; 
+				font-family: 'Lato-Regular', sans-serif;
+				font-size: 12px;
+				text-transform: uppercase;
+				text-decoration: none;
+				color: #fff;
+			}
+			.slider-menu {
+				display: block;
+				position: absolute;
+				top: 42px;
+				left: 1px;
+				width: 6px;
+				height: 2px;
+				background-color: #fff;
+				transition: all 500ms ease; //Анимация отвечает за эффект перемещения бигунка под меню 
+			}
+			
+			
+			//Осторожно, хардкод! В будущем нужно будет заменить!
+				//Харкода больше нет!
+			// li:nth-child(1):hover ~ .slider-menu {
+			// 	width: 37px;
+			// }
+			// li:nth-child(2):hover ~ .slider-menu {
+			// 	width: 63px;
+			// 	left: 61px;
+			// }
+			// li:nth-child(3):hover ~ .slider-menu {
+			// 	width: 46px;
+			// 	left: 148px;
+			// }
+			// li:nth-child(4):hover ~ .slider-menu {
+			// 	width: 35px;
+			// 	left: 218px;
+			// }
+			// li:nth-child(5):hover ~ .slider-menu {
+			// 	width: 63px;
+			// 	left: 277px;
+			// }
+			//--------
+		}
+	}
+}
+
+
+//Описание сетки
+.grid__edge {
+	%edge {
+		//Общий шаблон для границ сетки
+		position: absolute;
+		z-index: -20;
+		background-color: rgba(255, 255, 255, 0.05);
+	}
+	&-1 {
+		@extend %edge;
+		@include rel-width(1440px);
+		height: 1px;
+		@include rel-top(689px);
+		@include rel-left(11px);
+	}
+	&-2 {
+		@extend %edge;
+		@include rel-width(888px);
+		height: 1px;
+		@include rel-top(502px);
+		@include rel-left(11px);
+	}
+	&-3 {
+		@extend %edge;
+		width: 1px;
+		@include rel-height(681px);
+		bottom: 0;
+		@include rel-left(324px);
+	}
+	&-4 {
+		@extend %edge;
+		width: 1px;
+		@include rel-height(541px);
+		bottom: 0;
+		@include rel-left(538px);
+	}
+	&-5 {
+		@extend %edge;
+		@include rel-width(787px);
+		height: 1px;
+		@include rel-top(362px);
+		@include rel-left(950px);
+	}
+	&-6 {
+		@extend %edge;
+		@include rel-width(1440px);
+		height: 1px;
+		@include rel-top(150px);
+		@include rel-left(297px);
+	}
+	&-7 {
+		@extend %edge;
+		width: 1px;
+		@include rel-height(927px);
+		top: 0;
+		@include rel-left(1423px);
+	}
+	&-8 {
+		@extend %edge;
+		width: 1px;
+		@include rel-height(927px);
+		top: 0;
+		@include rel-left(1209px);
+	}
+}
+
+
+//Описания анимации квадратов с градиентом
+@keyframes gradient-box {
+	100% {top: 0;}
+}
+//Описание градиентово
+.grid__gradient-box {
+	%gradient-box {
+		//Шаблон правил для контейнера градиента
+		z-index: -30;
+		position: absolute;
+		overflow: hidden;
+	}
+	%gradient {
+		//Шаблон правил для градиента
+		position: absolute;
+		top: -600%;
+		width: 100%;
+		height: 700%;
+		background: repeating-linear-gradient(
+			45deg, 
+			rgba(255, 255, 255, 0.05) 0,
+			rgba(30, 30, 30, 0)33%,
+			rgba(255, 255, 255, 0.03) 66%,
+			rgba(30, 30, 30, 0)100%);
+		animation-name: gradient-box;
+		animation-duration: 5s;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+		animation-timing-function: linear;
+	}
+	&-1 {
+		@extend %gradient-box;
+		@include rel-top(151px);
+		@include rel-left(1209px);
+		@include rel-width(215px);
+		@include rel-height(211px);
+		.gradient {
+			@extend %gradient;
+		}
+	}
+	&-2 {
+		@extend %gradient-box;
+		@include rel-top(503px);
+		@include rel-left(325px);
+		@include rel-width(215px);
+		@include rel-height(186px);
+		
+		.gradient {
+			@extend %gradient;
+		}
+	}
+}
+
+//Описание блока с выводом трека 
+.track {
+	%track-text {
+		//Шаблон для текста в блоке трека
+		padding: 0;
+		margin: 0;
+		vertical-align: middle;
+		font-size: 12px;
+		line-height: 20px;
+	}
+	&__info-block {
+		position: absolute;
+		@include rel-top(230px);
+		@include rel-right(720px);
+		@include rel-width(150px);
+		min-width: 150px;
+		&-data {@extend %track-text;}
+		&-title {
+			@extend %track-text;
+			font-weight: normal;
+		}
+	}
+	&__play-block {
+		position: absolute;
+		@include rel-top(230px);
+		@include rel-left(1480px);
+		@include rel-width(150px);
+		min-width: 150px;
+		&-play {
+			display: inline-block;
+			line-height: 20px;
+			vertical-align: middle;
+			height: 0;
+			font-size: 0; //Скрывает текст
+			//Создание треугольника-кнопки
+			border-style: solid;
+			border-top: transparent solid 6px;
+			border-bottom: transparent solid 6px;
+			border-right: transparent solid 0;
+			border-left: #fff solid 6px;
+			//----------
+			transition: all 500ms ease; //Анимация кнопки Плей
+			&:hover {
+				transform: scale(1.3, 1.3);
+				transform-origin: 0 50%;
+			}
+		}
+		&-time {@extend %track-text;}
+	}
+}
+
+
+//Описание контет зоны
+.content {
+	position: absolute;
+	@include rel-top(355px);
+	@include rel-left(355px);
+	&__info-box {
+		//Правила для основной информации слайда
+		@include rel-width(380px);
+		min-width: 380px;
+		padding-bottom: 60px;
+		z-index: 100;
+		.content__text {
+			 h2 {
+			 	padding: 0;
+				margin: 0;
+				font-family: 'TrojanPro3-Bold', serif;
+				font-weight: bold;
+				font-size: 48px;
+				line-height: 71px;
+				text-transform: uppercase;
+			}
+			.content__spacer {
+				padding: 0;
+				margin: 0;
+				font-family: 'Lato-Regular', sans-serif;
+				font-weight: normal;
+				font-size: 36px;
+				line-height: 80px;
+				text-transform: uppercase;
+			}
+			p {
+				padding: 0;
+				margin: 0;
+				font-family: 'Lato-Regular', sans-serif;
+				font-size: 18px;
+				line-height: 30px;
+				color: rgba(255, 255, 255, 0.7);
+			}
+		}
+	}
+	&__nav {
+		//Правила для новигационна блока слайдера
+		@include rel-width(380px);
+		min-width: 380px;
+		.content__open {
+			font-family: 'Lato-Regular', sans-serif;
+			font-size: 12px;
+			line-height: 26px;
+			color: #fff;
+			text-transform: uppercase;
+			text-decoration: none;
+			&::after {
+				content: '';
+				display: inline-block;
+				width: 60px;
+				height: 1px;
+				margin-left: 17px;
+				vertical-align: middle;
+				background-color: #fff;			
+				transition: width 500ms ease;
+			}
+			&:hover::after {width: 78px;}
+		}
+		.content__arrow {
+			display: inline-block;
+			position: relative;
+			width: 66px;
+			float: right;
+			line-height: 26px;
+			vertical-align: middle;
+			%arrow-transition {
+				//Правило анимации для всех элементов стрелки
+				transition: all 500ms ease;
+			}
+			&-tip-left {
+				display: inline-block;
+				width: 0;
+				height: 0;
+				line-height: 26px;
+				vertical-align: middle;
+				//Треугольник влево
+				border-style: solid;
+				border-top: transparent solid 3.5px;
+				border-bottom: transparent solid 3.5px;
+				border-left: transparent solid 0;
+				border-right: #fff solid 6px;
+				//----------
+				@extend %arrow-transition;
+			}
+			&-shaft-left {
+				display: inline-block;
+				width: 18px;
+				height: 1px;
+				margin-right: 9px;
+				line-height: 26px;
+				vertical-align: middle;
+				background-color: #fff;
+				@extend %arrow-transition;				
+			}
+			&-shaft-right {
+				display: inline-block;
+				width: 18px;
+				height: 1px;
+				margin-left: 9px;
+				line-height: 26px;
+				vertical-align: middle;				
+				background-color: #fff;				
+				@extend %arrow-transition;
+			}
+			&-tip-right {
+				display: inline-block;
+				width: 0;
+				height: 0;
+				line-height: 26px;
+				vertical-align: middle;
+				//Треугольник вправо
+				border-style: solid;
+				border-top: transparent solid 3.5px;
+				border-bottom: transparent solid 3.5px;
+				border-right: transparent solid 0;
+				border-left: #fff solid 6px;
+				//-----------
+				@extend %arrow-transition;
+			}
+			%arrow-link {
+					//Правило для ссылок на стрелок
+					display: inline-block;
+					position: absolute;
+					width: 24px;
+					height: 26px;
+					font-size: 0;
+			}
+			&-left {
+				@extend %arrow-link;
+				top: 0;
+				left: 0;
+				//Правила запуска анимации при наведении на стрелку влево
+				&:hover ~ .content__arrow-shaft-left {
+					transform: scale(2, 1);
+					transform-origin: left center;
+				}
+				&:hover ~ .content__arrow-tip-right {
+					transform: scale(0);
+					transform-origin: left center;
+				}
+				//----------
+			}
+			&-right {
+				@extend %arrow-link;
+				top: 0;
+				left: 42px;
+				//Правило запуска анимации при наведении на стрелку вправо
+				&:hover ~ .content__arrow-shaft-right {
+					transform: scale(2, 1);
+					transform-origin: right center;
+				}
+				&:hover ~ .content__arrow-tip-left {
+					transform: scale(0);
+					transform-origin: right center;
+				}
+				//----------
+			}
+		}
+	}
+}
+
+
+//Правила для пагинатора
+.pagination {
+	position: absolute;
+	@include rel-top(245px);
+	@include rel-left(535px);
+	padding: 0;
+	margin: 0;
+	z-index: -10;
+	font-family: 'TrajanPro3-Bold', serif;
+	font-weight: bold;
+	font-size: 60px;
+	background: linear-gradient(
+		-120deg, 
+		rgba(255, 255, 255, 0.05), 
+		rgba(30, 30, 30, 0));
+	-webkit-background-clip: text; //Обрезает фон по форме текста
+	color: transparent;
+	//Маска для цифры
+	-webkit-mask-image: url('../img/mask.svg');
+	-webkit-mask-size: 110%; 
+	//----------
+	&__active {
+		font-size: 187px;
+	}
+	&__slash {
+		font-size: 72px;
+	}
+}
+
+//Правила для футера
+.footer {
+	position: absolute;	
+	@include rel-bottom(55px);
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 20px;
+	margin: 0;
+	padding: 0;	
+	&__language {
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		@include rel-left(45px);
+		%lang-link {
+			//Шаблон для ссылок в блоке переключения языка
+			margin-right: 15px;
+			text-decoration: none;
+			text-transform: uppercase;
+			font-size: 12px;
+			transition: all 500ms ease;
+			&:hover {
+				color: #fff;
+			}
+		}
+		&-en {
+			@extend %lang-link;
+			color: #fff;
+		}
+		&-ru {
+			@extend %lang-link;
+			color: #848484;
+		}
+	}
+	&__social {
+		position: absolute;
+		@include rel-right(45px);
+		margin: 0;
+		padding: 0;		
+		%social-icon {
+			//Шаблон для ссылок на социальные сети
+			display: inline-block;
+			width: 15px;
+			height: 15px;
+			margin-left: 15px;
+			font-size: 0;
+			background-image: url("../img/social.svg");
+			background-repeat: no-repeat;
+			background-size: auto 13px;
+			transition: all 300ms ease;
+			&:hover {
+				transform: scale(1.5);
+				transform-origin: 50% 50%; 
+			}
+		}
+		&-fb {
+			@extend %social-icon;
+			background-position: 7px 1px;
+		}
+		&-tw {
+			@extend %social-icon;
+			background-position: -15px 1px;
+		}
+		&-yt {
+			@extend %social-icon;
+			background-position: -33px 1px;
+		}
+	}
+}

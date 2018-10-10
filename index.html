@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Guitar</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/action.js"></script>
+</head>
+<body>
+	<header class="header">
+		<div class="header__logo">
+			<img src="img/guitar-logo.png" alt="Guitar logotype">
+		</div>
+		<nav class="header__menu">
+			<ul>
+				<li class="active_menu"><a href="">Home</a></li>
+				<li><a href="">Concerts</a></li>
+				<li><a href="">Tracks</a></li>
+				<li><a href="">News</a></li>
+				<li><a href="">Contacts</a></li>
+				<!-- Бегунок под основным меню -->
+				<span class="slider-menu"></span>
+			</ul>
+		</nav>
+	</header>
+	<div class="grid">
+		<div class="grid__edge">
+			<div class="grid__edge-1"></div>
+			<div class="grid__edge-2"></div>
+			<div class="grid__edge-3"></div>
+			<div class="grid__edge-4"></div>
+			<div class="grid__edge-5"></div>
+			<div class="grid__edge-6"></div>
+			<div class="grid__edge-7"></div>
+			<div class="grid__edge-8"></div>
+		</div>
+		<div class="grid__gradient-box">
+			<div class="grid__gradient-box-1"><div class="gradient"></div></div>
+			<div class="grid__gradient-box-2"><div class="gradient"></div></div>
+		</div>
+	</div>
+	<div class="track">
+		<div class="track__info-block">
+			<time class="track__info-block-data"> 17 August 2015</time>
+			<h3 class="track__info-block-title">-National Park</h3>
+		</div>
+		<div class="track__play-block">
+			<a href="" class="track__play-block-play" title="Play" onclick="return false">Play</a>
+			<p class="track__play-block-time">2:14</p>
+		</div>
+	</div>
+	<div class="content">
+		<div class="content__info-box">
+			<article class="content__text">
+				<h2>Kirk Lee <br>Hammett</h2>
+				<p class="content__spacer">-</p>
+				<p>American musician who has been lead guitarist and a contributing songwriter for the heavy metal band Metallica since 1983.</p>
+			</article>
+		</div>
+		<div class="content__nav">
+			<a href="" class="content__open" onclick="return false">Open</a>
+			<div class="content__arrow">
+				<a href="" class="content__arrow-left" title="Prev" onclick="return false"><</a>
+				<a href="" class="content__arrow-right" title="Next" onclick="return false"></a>
+				<!-- Стрелки перелистывания слайдов. Убраны пробелы чтобы состыковать части стрелок! -->
+				<div class="content__arrow-tip-left"></div><div class="content__arrow-shaft-left"></div><div class="content__arrow-shaft-right"></div><div class="content__arrow-tip-right"></div>
+			</div>
+		</div>
+	</div>
+	<div class="pagination">
+		<span class="pagination__active">01</span><span class="pagination__slash">/</span>05
+	</div>
+	<footer class="footer">
+		<div class="footer__language">
+			<a href="" class="footer__language-ru">ru</a>
+			<a href="" class="footer__language-en">en</a>
+		</div>
+		<div class="footer__social">
+			<a href="" class="footer__social-fb" title="Facebook">Facebook</a>
+			<a href="" class="footer__social-tw" title="Twitter">Twitter</a>
+			<a href="" class="footer__social-yt" title="YouTube">YouTube</a>
+		</div>
+	</footer>						
+</body>
+</html>
